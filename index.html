@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ Aşk Evreni ❤️</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial;
+    background:black;
+    color:white;
+}
+
+/* 🌌 YILDIZ EVRENİ */
+.layer{
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:radial-gradient(white 1px,transparent 1px);
+    background-size:60px 60px;
+    animation:move 80s linear infinite;
+    opacity:0.4;
+}
+
+.layer2{
+    background-size:120px 120px;
+    animation-duration:140s;
+    opacity:0.2;
+}
+
+@keyframes move{
+    from{transform:translate(0,0);}
+    to{transform:translate(-600px,-600px);}
+}
+
+/* 🌠 KAYAN YILDIZ */
+.star{
+    position:absolute;
+    width:120px;
+    height:2px;
+    background:linear-gradient(90deg,white,transparent);
+    animation:shoot 2s linear forwards;
+}
+
+@keyframes shoot{
+    from{transform:translate(0,0);opacity:1;}
+    to{transform:translate(-500px,500px);opacity:0;}
+}
+
+/* 💌 ZARF */
+#envelope{
+    width:200px;
+    height:140px;
+    background:#ff4f81;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    cursor:pointer;
+    box-shadow:0 0 40px #ff4f81;
+    border-radius:10px;
+}
+
+#envelope::after{
+    content:"💌";
+    font-size:50px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+/* PORTAL */
+#portal{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle,#ff4f81,#000);
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+/* INPUT */
+input{
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    text-align:center;
+}
+
+/* SAHNE */
+#scene{
+    display:none;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+}
+
+/* FOTO */
+#photo{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:4px solid white;
+}
+
+/* YAZI */
+#text{
+    font-size:35px;
+}
+
+/* GÜN */
+#days{
+    margin-top:10px;
+    font-size:20px;
+}
+
+/* BUTONLAR */
+button{
+    margin-top:10px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* MEKTUP */
+#letter{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+#letterBox{
+    background:white;
+    color:black;
+    padding:25px;
+    border-radius:15px;
+    width:80%;
+    max-width:500px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="layer"></div>
+<div class="layer layer2"></div>
+
+<div id="envelope"></div>
+
+<div id="portal">
+    <h2>💖 İsmini Yaz 💖</h2>
+    <input id="name" placeholder="ESİLA yaz">
+</div>
+
+<div id="scene">
+    <div id="text"></div>
+    <img id="photo" src="photo.jpg">
+    <div id="days"></div>
+
+    <button onclick="openLetter()">💌 Aşk Mektubu</button>
+    <button onclick="story()">🎬 Senin Hikayen</button>
+</div>
+
+<!-- 💌 MEKTUP -->
+<div id="letter">
+    <div id="letterBox">
+        <h2>❤️ Sana Mektup ❤️</h2>
+        <p>
+            Sana ne kadar kızsam da günün sonunda yine seni seviyor olacağım.<br><br>
+            İyi ki varsın, iyi ki benimlesin.<br><br>
+            Seni çok seviyorum ❤️
+        </p>
+        <button onclick="closeLetter()">Kapat</button>
+    </div>
+</div>
+
+<!-- HİKAYE -->
+<div id="story" style="display:none;position:absolute;inset:0;background:black;justify-content:center;align-items:center;text-align:center;font-size:30px;">
+    💖 Bir kalp vardı…<br>
+    Ve bir isim girdi içine…<br><br>
+    ESİLA ❤️
+</div>
+
+<script>
+
+/* YILDIZ */
+for(let i=0;i<100;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.top=Math.random()*100+"vh";
+    s.style.left=Math.random()*100+"vw";
+    document.body.appendChild(s);
+}
+
+/* ZARF */
+document.getElementById("envelope").onclick=()=>{
+    document.getElementById("envelope").style.display="none";
+    document.getElementById("portal").style.display="flex";
+};
+
+/* PORTAL */
+document.getElementById("name").addEventListener("input",(e)=>{
+    if(e.target.value.toLowerCase()==="esila"){
+        document.getElementById("portal").style.display="none";
+        document.getElementById("scene").style.display="block";
+        typeText();
+        document.getElementById("days").innerHTML="❤️ 1454 gündür birlikteyiz ❤️";
+    }
+});
+
+/* YAZI */
+function typeText(){
+    let text="SENİ SEVİYORUM ❤️";
+    let i=0;
+    let el=document.getElementById("text");
+
+    let t=setInterval(()=>{
+        el.innerHTML+=text[i];
+        i++;
+        if(i>=text.length) clearInterval(t);
+    },120);
+}
+
+/* 💌 MEKTUP */
+function openLetter(){
+    document.getElementById("letter").style.display="flex";
+}
+
+function closeLetter(){
+    document.getElementById("letter").style.display="none";
+}
+
+/* 🎬 HİKAYE */
+function story(){
+    document.getElementById("story").style.display="flex";
+}
+
+</script>
+
+</body>
+</html>
